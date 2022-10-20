@@ -1,41 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int max(int a, int b)
-{
-    return (a > b) ? a : b;
-}
- 
-
 int recursive(int eggs, int floors)
 {
-    // If there are no floors,
-    // then no trials needed.
-    // OR if there is one floor,
-    // one trial needed.
+    if(floors == 0){
+        return 0;
+    }
+    // if one floor then that is the critical one
+    // so no trals needed
     if (floors == 1)
         return floors-1;
- 
-    // We need k trials for one
-    // egg and k floors
+    
+    // if floors number of floors are there
+    // n-1 trials are needed as one egg
+    // is dropped from each floor in the worst case
+    // and the last one is the critical one for sure
     if (eggs == 1)
         return floors-1;
  
-    int min = INT_MAX, x, res;
+    int min_tries = INT_MAX, x, res;
  
     // Consider all droppings from
-    // 1st floor to kth floor and
+    // 1st floor to xth floor and
     // return the minimum of these
     // values plus 1.
     for (x = 1; x <= floors; x++) {
-        res = max(
-            recursive(eggs - 1, x - 1),
-            recursive(eggs, floors - x));
-        if (res < min)
-            min = res;
+        min_tries = 
+        min(min_tries, max(recursive(eggs - 1, x - 1), recursive(eggs, floors - x)));
     }
  
-    return min + 1;
+    return min_tries + 1;
 }
 int main(){
 #ifndef GRADESCOPE
@@ -51,5 +45,5 @@ int main(){
     input.erase(0, input.find(",") + 1);
     eggs = stoi(input);
 
-    cout << recursive(eggs, floors) << endl;
+    cout << recursive(eggs, floors);
 }
