@@ -51,5 +51,5 @@ int main(){
     input.erase(0, input.find(",") + 1);
     eggs = stoi(input);
 
-    cout << recursive(eggs, floors);
+    cout << recursive(eggs, floors) << endl;
 }
